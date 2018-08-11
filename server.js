@@ -36,14 +36,38 @@ const server = http.createServer((req, res) => {
   req.on('end', () => {
     buffer += decoder.end();
 
-    // Send the Resonse
-    res.end(
-      `Request Received on path: ${trimmedPath}, with Query String ${JSON.stringify(
-        queryStringObject
-      )}, with headers: ${JSON.stringify(
-        headers
-      )}, with method: ${method} and with payload: ${buffer}\n`
-    );
+    // Choose the handler the Request should got to. if one is not found use the notFound Handler
+    // const choosenHandler =
+    //   typeof router[trimmedPath] !== undefined
+    //     ? router[trimmedPath]
+    //     : handlers.notFound;
+
+    const choosenHandler = !!router[trimmedPath]
+      ? router[trimmedPath]
+      : handlers.notFound;
+
+    const data = {
+      path: trimmedPath,
+      queryString: queryStringObject,
+      method: method,
+      headers: headers,
+      body: buffer
+    };
+
+    // Route the request to the handler specified in the router
+    choosenHandler(data, (statusCode, payload) => {
+      // Use the status code called by the handler, or default to 200
+      statusCode = typeof statusCode === 'number' ? statusCode : 200;
+      // Use the payload called by hte handler, or default to an empty object
+      payload = typeof payload === 'object' ? payload : {};
+
+      // Convert the payload to a string
+      const payloadString = JSON.stringify(payload, null, 4);
+
+      // Return the Response
+      res.writeHead(statusCode);
+      res.end(payloadString);
+    });
   });
 });
 
@@ -51,3 +75,19 @@ const server = http.createServer((req, res) => {
 server.listen(3000, () => {
   console.log('Server is listening on port 3000 now');
 });
+
+// Define the handlers
+const handlers = {
+  sample: (data, callback) => {
+    // callback a http status code and a payload object
+    callback(406, { name: 'sample handle' });
+  },
+  notFound: (data, callback) => {
+    callback(404);
+  }
+};
+
+// Define a request router
+const router = {
+  sample: handlers.sample
+};
