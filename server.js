@@ -1,11 +1,13 @@
 /**
  * Primary File for the API
  */
-
+var a = require('./config');
 // Dependencies
 const http = require('http');
 const url = require('url');
-const StringDecoder = require('string_decoder').StringDecoder;
+const { StringDecoder } = require('string_decoder');
+
+const config = require('./config');
 
 // The Server should respond to all Requests with a String
 const server = http.createServer((req, res) => {
@@ -74,8 +76,10 @@ const server = http.createServer((req, res) => {
 });
 
 // Start the Server, and have it Listen to Port 3000
-server.listen(3000, () => {
-  console.log('Server is listening on port 3000 now');
+server.listen(config.PORT, () => {
+  console.log(
+    `Server is Listening on port ${config.PORT}, in ${config.ENV} mode.`
+  );
 });
 
 // Define the handlers
