@@ -11,6 +11,9 @@ const server = http.createServer((req, res) => {
   // Get the URL and Parse it
   const parsedUrl = url.parse(req.url, true); // true: calls the 'Query Strings' module and sends the URL to be Parsed and the query strings object to be returned
 
+  // Get Query String as an Object
+  const queryStringObject = parsedUrl.query;
+
   // Get the path
   const path = parsedUrl.pathname; // untrimmed path that the user requested
   const trimmedPath = path.replace(/^\/+|\/+$/g, ''); // this regex removes any slash at the end of the url with blank
@@ -19,7 +22,11 @@ const server = http.createServer((req, res) => {
   const method = req.method.toUpperCase();
 
   // Send the Resonse
-  res.end(`Request Received on path: ${trimmedPath} with method: ${method}\n`);
+  res.end(
+    `Request Received on path: ${trimmedPath}, with Query String ${JSON.stringify(
+      queryStringObject
+    )} and with method: ${method}\n`
+  );
 });
 
 // Start the Server, and have it Listen to Port 3000
