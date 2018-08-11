@@ -1,16 +1,47 @@
 /**
  * Primary File for the API
  */
-var a = require('./config');
+
 // Dependencies
 const http = require('http');
+const https = require('https');
 const url = require('url');
+const fs = require('fs');
 const { StringDecoder } = require('string_decoder');
 
 const config = require('./config');
 
-// The Server should respond to all Requests with a String
-const server = http.createServer((req, res) => {
+// Instantiate the HTTP Server
+const httpServer = http.createServer((req, res) => {
+  unifiedServer(req, res);
+});
+
+// Start the HTTP Server
+httpServer.listen(config.HTTP_PORT, () => {
+  console.log(
+    `Server is Listening on port ${config.HTTP_PORT}, in ${config.ENV} mode.`
+  );
+});
+
+// Instantiate the HTTPS Server
+const httpsServerOptions = {
+  key: fs.readFileSync('./https/key.pem'),
+  cert: fs.readFileSync('./https/cert.pem')
+};
+
+const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
+  unifiedServer(req, res);
+});
+
+// Start the HTTPS Server
+httpsServer.listen(config.HTTPS_PORT, () => {
+  console.log(
+    `Server is Listening on port ${config.HTTPS_PORT}, in ${config.ENV} mode.`
+  );
+});
+
+// All the server logic for both HTTP and HTTPS
+const unifiedServer = (req, res) => {
   // Get the URL and Parse it
   const parsedUrl = url.parse(req.url, true); // true: calls the 'Query Strings' module and sends the URL to be Parsed and the query strings object to be returned
 
@@ -73,14 +104,7 @@ const server = http.createServer((req, res) => {
       res.end(payloadString);
     });
   });
-});
-
-// Start the Server, and have it Listen to Port 3000
-server.listen(config.PORT, () => {
-  console.log(
-    `Server is Listening on port ${config.PORT}, in ${config.ENV} mode.`
-  );
-});
+};
 
 // Define the handlers
 const handlers = {

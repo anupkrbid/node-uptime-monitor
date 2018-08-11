@@ -6,12 +6,14 @@
 const config = {
   // Development (default) Environment
   dev: {
-    PORT: 3000,
+    HTTP_PORT: 3000,
+    HTTPS_PORT: 3001,
     ENV: 'development'
   },
   // Production Environment
   prod: {
-    PORT: 8080,
+    HTTP_PORT: 8080,
+    HTTPS_PORT: 8081,
     ENV: 'production'
   }
 };
