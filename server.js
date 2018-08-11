@@ -112,6 +112,10 @@ const handlers = {
     // callback a http status code and a payload object
     callback(200);
   },
+  hello: (data, callback) => {
+    // callback a http status code and a payload object
+    callback(200, { message: 'Homework Assignment #1' });
+  },
   notFound: (data, callback) => {
     callback(404);
   }
@@ -119,5 +123,6 @@ const handlers = {
 
 // Define a request router
 const router = {
-  ping: handlers.ping
+  ping: handlers.ping,
+  hello: handlers.hello
 };
