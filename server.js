@@ -14,6 +14,9 @@ const server = http.createServer((req, res) => {
   // Get Query String as an Object
   const queryStringObject = parsedUrl.query;
 
+  // Get Headers as an Object
+  const headers = req.headers;
+
   // Get the path
   const path = parsedUrl.pathname; // untrimmed path that the user requested
   const trimmedPath = path.replace(/^\/+|\/+$/g, ''); // this regex removes any slash at the end of the url with blank
@@ -25,7 +28,7 @@ const server = http.createServer((req, res) => {
   res.end(
     `Request Received on path: ${trimmedPath}, with Query String ${JSON.stringify(
       queryStringObject
-    )} and with method: ${method}\n`
+    )}, with headers: ${JSON.stringify(headers)} and with method: ${method}\n`
   );
 });
 
