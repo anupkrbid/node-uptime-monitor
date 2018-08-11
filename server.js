@@ -1,27 +1,28 @@
 /**
- * Primary filr for the API
+ * Primary File for the API
  */
 
 // Dependencies
 const http = require('http');
 const url = require('url');
 
-// The server should respond to all requests with a string
+// The Server should respond to all Requests with a String
 const server = http.createServer((req, res) => {
-  // Get the url and parse it
-  const parsedUrl = url.parse(req.url, true); // true: calls the 'query strings' module and sends the url to be parsed and the query strings object to be returned
+  // Get the URL and Parse it
+  const parsedUrl = url.parse(req.url, true); // true: calls the 'Query Strings' module and sends the URL to be Parsed and the query strings object to be returned
 
   // Get the path
   const path = parsedUrl.pathname; // untrimmed path that the user requested
   const trimmedPath = path.replace(/^\/+|\/+$/g, ''); // this regex removes any slash at the end of the url with blank
 
-  // Send the resonse
-  res.end(`Request Received on this path: ${trimmedPath}\n`);
+  // Get HTTP Method
+  const method = req.method.toUpperCase();
 
-  // Log the request path
+  // Send the Resonse
+  res.end(`Request Received on path: ${trimmedPath} with method: ${method}\n`);
 });
 
-// Start the server, and have it listen to port 3000
+// Start the Server, and have it Listen to Port 3000
 server.listen(3000, () => {
   console.log('Server is listening on port 3000 now');
 });
