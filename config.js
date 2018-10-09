@@ -8,12 +8,14 @@ const config = {
   dev: {
     HTTP_PORT: 3000,
     HTTPS_PORT: 3001,
+    HASHING_SECRET: 'canBeAnyString',
     ENV: 'development'
   },
   // Production Environment
   prod: {
     HTTP_PORT: 8080,
     HTTPS_PORT: 8081,
+    HASHING_SECRET: 'canBeAnyString',
     ENV: 'production'
   }
 };
