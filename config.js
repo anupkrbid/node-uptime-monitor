@@ -9,6 +9,7 @@ const config = {
     HTTP_PORT: 3000,
     HTTPS_PORT: 3001,
     HASHING_SECRET: 'canBeAnyString',
+    MAX_CHECK_LIMIT: 5,
     ENV: 'development'
   },
   // Production Environment
@@ -16,6 +17,7 @@ const config = {
     HTTP_PORT: 8080,
     HTTPS_PORT: 8081,
     HASHING_SECRET: 'canBeAnyString',
+    MAX_CHECK_LIMIT: 5,
     ENV: 'production'
   }
 };
