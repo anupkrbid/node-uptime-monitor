@@ -10,7 +10,12 @@ const config = {
     HTTPS_PORT: 3001,
     HASHING_SECRET: 'canBeAnyString',
     MAX_CHECK_LIMIT: 5,
-    ENV: 'development'
+    ENV: 'development',
+    TWILIO: {
+      ACCOUNT_SID: 'ACb32d411ad7fe886aac54c665d25e5c5d',
+      AUTH_TOKEN: '9455e3eb3109edc12e3d8c92768f7a67',
+      FROM_PHONE: '+15005550006'
+    }
   },
   // Production Environment
   prod: {
@@ -18,7 +23,12 @@ const config = {
     HTTPS_PORT: 8081,
     HASHING_SECRET: 'canBeAnyString',
     MAX_CHECK_LIMIT: 5,
-    ENV: 'production'
+    ENV: 'production',
+    TWILIO: {
+      ACCOUNT_SID: 'ACb32d411ad7fe886aac54c665d25e5c5d',
+      AUTH_TOKEN: '9455e3eb3109edc12e3d8c92768f7a67',
+      FROM_PHONE: '+15005550006'
+    }
   }
 };
 
